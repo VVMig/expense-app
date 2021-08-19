@@ -11,6 +11,7 @@ declare module 'styled-components' {
       yellow: string;
       primary: string;
       background: string;
+      green: string;
     };
     padding: {
       side: number;
