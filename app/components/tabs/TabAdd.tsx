@@ -1,7 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { GestureResponderEvent, TouchableOpacity } from 'react-native';
+import { GestureResponderEvent } from 'react-native';
 import { theme } from '../../../theme/theme';
+import { Styled } from './styled';
 
 interface Props {
   onPress:
@@ -15,22 +16,20 @@ interface Props {
 
 export const TabAdd: React.FC<Props> = ({ children, onPress }) => {
   return (
-    <LinearGradient
-      colors={[theme.colors.blue, theme.colors.purple, theme.colors.lightRed]}
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 70,
-        height: 70,
-        borderRadius: 50,
-        bottom: 30,
-      }}
-      start={{
-        x: 1,
-        y: 0.5,
-      }}
-    >
-      <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>
-    </LinearGradient>
+    <Styled.AddButtonContainer>
+      <LinearGradient
+        colors={[theme.colors.lightRed, theme.colors.purple, theme.colors.blue]}
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 70,
+          height: 70,
+          borderRadius: 35,
+          bottom: 30,
+        }}
+      >
+        <Styled.AddButton onPress={onPress}>{children}</Styled.AddButton>
+      </LinearGradient>
+    </Styled.AddButtonContainer>
   );
 };
