@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { AddExpense, Chart, Home } from '../../../screens';
@@ -61,6 +61,6 @@ const Styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
-    height: 80,
+    height: 90,
   },
 });
