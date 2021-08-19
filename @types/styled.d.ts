@@ -8,6 +8,12 @@ declare module 'styled-components' {
       purple: string;
       lightRed: string;
       white: string;
+      yellow: string;
+      primary: string;
+      background: string;
+    };
+    padding: {
+      side: number;
     };
   }
 }

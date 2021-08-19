@@ -7,5 +7,11 @@ export const theme: DefaultTheme = {
     lightRed: '#f64f59',
     purple: '#c471ed',
     white: '#ffffff',
+    yellow: '#F9C359',
+    primary: '#3E4F64',
+    background: '#F3F5F7',
+  },
+  padding: {
+    side: 20,
   },
 };
