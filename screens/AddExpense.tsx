@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+import { Styled } from './styled';
 
 export const AddExpense = () => {
   return (
-    <View style={{ flex: 1 }}>
+    <Styled.Container>
       <Text>Add expense</Text>
-    </View>
+    </Styled.Container>
   );
 };

@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+
+import { HomeHeader } from '../app/components/home-header/HomeHeader';
+import { Styled } from './styled';
 
 export const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <Styled.Container>
+      <HomeHeader />
+    </Styled.Container>
   );
 };
