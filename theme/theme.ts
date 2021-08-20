@@ -10,6 +10,7 @@ export const theme: DefaultTheme = {
     yellow: '#F9C359',
     primary: '#3E4F64',
     background: '#F3F5F7',
+    green: '#4DD863',
   },
   padding: {
     side: 20,
