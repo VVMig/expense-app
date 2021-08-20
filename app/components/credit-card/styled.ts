@@ -17,6 +17,10 @@ const CardTitle = styled.Text`
   padding-top: 30px;
 `;
 
+const SwitchButton = styled.TouchableOpacity`
+  align-items: center;
+`;
+
 const Balance = styled.Text`
   font-size: 48px;
   padding-top: 5px;
@@ -74,4 +78,5 @@ export const Styled = {
   StatsTextContainer,
   StatsTitle,
   StatsMoney,
+  SwitchButton,
 };

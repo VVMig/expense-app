@@ -1,7 +1,9 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import { theme } from '../../../theme/theme';
+import { store } from '../../store/store';
 import { Styled } from './styled';
 
 interface Props {
@@ -9,9 +11,10 @@ interface Props {
   money: number;
 }
 
-export const Stats: React.FC<Props> = ({ money, isIncome }) => {
-  const formatedMoney = new Intl.NumberFormat('de-DE', {
-    maximumFractionDigits: 2,
+export const Stats: React.FC<Props> = observer(({ money, isIncome }) => {
+  const formatedMoney = new Intl.NumberFormat(store.user?.locale, {
+    style: 'currency',
+    currency: store.user?.currency,
   }).format(money);
 
   return (
@@ -31,4 +34,4 @@ export const Stats: React.FC<Props> = ({ money, isIncome }) => {
       </Styled.StatsTextContainer>
     </Styled.StatsContainer>
   );
-};
+});
