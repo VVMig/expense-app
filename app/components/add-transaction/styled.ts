@@ -28,7 +28,7 @@ const AmountInput = styled.TextInput`
   width: 70%;
   border-radius: 45px;
   background-color: ${({ theme }) => theme.colors.white};
-  text-align: center;
+  text-align: right;
   font-size: 36px;
   font-weight: bold;
   padding: 0 20px 0 50px;
@@ -39,11 +39,14 @@ const CurrencyContainer = styled.View`
   height: 80px;
   position: absolute;
   bottom: 0;
-  left: 18%;
-  padding-right: 7px;
+  left: 15%;
+  width: 85px;
+  padding-left: 10px;
+  align-items: center;
   justify-content: center;
-  border-color: ${({ theme }) => theme.colors.lightGray};
-  border-right-width: 2px;
+  border-bottom-left-radius: 45px;
+  border-top-left-radius: 45px;
+  background-color: ${({ theme }) => theme.colors.lightGray};
 `;
 
 const OptionsContainer = styled.View`
@@ -93,6 +96,14 @@ const AddButtonText = styled.Text`
   font-weight: bold;
 `;
 
+const OptionInput = styled.TextInput`
+  height: 100%;
+  flex: 1;
+  padding: 0 5px 0 20px;
+  font-size: 18px;
+  color: ${({ theme }) => theme.colors.lightGray}; ;
+`;
+
 export const Styled = {
   Header,
   Title,
@@ -107,4 +118,5 @@ export const Styled = {
   AddButtonText,
   AddButton,
   Option,
+  OptionInput,
 };
