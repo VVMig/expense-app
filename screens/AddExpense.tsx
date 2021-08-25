@@ -1,11 +1,18 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Text } from 'react-native';
+import { AddTransaction } from '../app/components/add-transaction/AddTransaction';
+import { AddExpenseNavigationProp } from './interfaces';
 import { Styled } from './styled';
 
-export const AddExpense = () => {
+interface Props {
+  navigation: AddExpenseNavigationProp;
+}
+
+export const AddExpense: React.FC<Props> = ({ navigation }) => {
   return (
     <Styled.Container>
-      <Text>Add expense</Text>
+      <AddTransaction navigation={navigation} />
     </Styled.Container>
   );
 };

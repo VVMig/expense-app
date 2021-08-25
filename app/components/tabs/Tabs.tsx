@@ -39,6 +39,10 @@ export const Tabs = () => {
           tabBarButton: ({ children, onPress }) => (
             <TabAdd onPress={onPress}>{children}</TabAdd>
           ),
+          unmountOnBlur: true,
+          tabBarStyle: {
+            display: 'none',
+          },
         }}
       />
       <Tab.Screen
