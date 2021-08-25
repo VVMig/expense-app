@@ -8,6 +8,7 @@ import { theme } from '../../../theme/theme';
 import { Currency } from '../../Currency';
 import { store } from '../../store/store';
 import { AddButton } from './AddButton';
+import { DateOption } from './DateOption';
 import { Header } from './Header';
 import { Option } from './Option';
 
@@ -37,6 +38,8 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
   const currencyIconName = currencyNameSwitch(store.user?.currency);
 
   const [amount, setAmount] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [note, setNote] = useState('');
 
   useEffect(() => {
     Animated.timing(appearAnim, {
@@ -45,6 +48,10 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
       useNativeDriver: false,
     }).start();
   }, []);
+
+  const onPressAdd = () => {
+    navigation.goBack();
+  };
 
   const onChangeAmount = (text: string) => {
     if (text.match(/,/g)?.length === 2 || text.match(/,...+/)) {
@@ -74,15 +81,21 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
           placeholderTextColor={theme.colors.purple}
         />
         <Styled.CurrencyContainer>
-          <Icon name={currencyIconName} size={40} color={theme.colors.purple} />
+          <Icon name={currencyIconName} size={40} color={theme.colors.white} />
         </Styled.CurrencyContainer>
       </Styled.AmountContainer>
       <Styled.OptionsContainer>
         <Option iconName="th-large" title="Category" />
-        <Option iconName="sticky-note" title="Note" />
-        <Option iconName="calendar-o" title="Today" />
+        <Option
+          iconName="sticky-note"
+          title="Note"
+          isInput
+          onChange={(text: string) => setNote(text)}
+          value={note}
+        />
+        <DateOption date={date} setDate={setDate} />
       </Styled.OptionsContainer>
-      <AddButton />
+      <AddButton onPress={onPressAdd} />
     </Animated.View>
   );
 });
