@@ -8,11 +8,13 @@ import { theme } from '../../../theme/theme';
 import { Currency } from '../../Currency';
 import { store } from '../../store/store';
 import { AddButton } from './AddButton';
+import { CategoryModal } from './modal/CategoryModal';
 import { DateOption } from './DateOption';
 import { Header } from './Header';
 import { Option } from './Option';
 
 import { Styled } from './styled';
+import { DefaultCategories } from '../../Categories';
 
 const { height } = Dimensions.get('window');
 
@@ -37,9 +39,11 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
   const appearAnim = useRef(new Animated.Value(height)).current;
   const currencyIconName = currencyNameSwitch(store.user?.currency);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState('');
+  const [category, setCategory] = useState(DefaultCategories[0].name);
 
   useEffect(() => {
     Animated.timing(appearAnim, {
@@ -51,6 +55,10 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
 
   const onPressAdd = () => {
     navigation.goBack();
+  };
+
+  const onToggleModalVisible = () => {
+    setIsModalVisible(!isModalVisible);
   };
 
   const onChangeAmount = (text: string) => {
@@ -85,7 +93,11 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
         </Styled.CurrencyContainer>
       </Styled.AmountContainer>
       <Styled.OptionsContainer>
-        <Option iconName="th-large" title="Category" />
+        <Option
+          iconName="th-large"
+          title={category}
+          onPress={onToggleModalVisible}
+        />
         <Option
           iconName="sticky-note"
           title="Note"
@@ -96,6 +108,12 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
         <DateOption date={date} setDate={setDate} />
       </Styled.OptionsContainer>
       <AddButton onPress={onPressAdd} />
+      <CategoryModal
+        isModalVisible={isModalVisible}
+        onToggleModalVisible={onToggleModalVisible}
+        defaultCategory={category}
+        onSave={(categoryName: string) => setCategory(categoryName)}
+      />
     </Animated.View>
   );
 });

@@ -75,6 +75,7 @@ const OptionTitle = styled.Text`
   padding-left: 20px;
   font-size: 18px;
   color: ${({ theme }) => theme.colors.lightGray};
+  text-transform: capitalize;
 `;
 
 const AddButtonContainer = styled.View`
