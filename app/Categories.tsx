@@ -41,3 +41,5 @@ export const getCategory = (categoryName: string) =>
   DefaultCategories.find(
     (category) => category.name.toLowerCase() === categoryName.toLowerCase()
   );
+
+export type ICategory = typeof DefaultCategories[0];
