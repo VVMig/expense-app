@@ -48,6 +48,7 @@ const ItemTitle = styled.Text`
   font-size: 20px;
   color: ${({ theme }) => theme.colors.primary};
   font-weight: bold;
+  text-transform: capitalize;
 `;
 
 const TransactionInfo = styled.View`

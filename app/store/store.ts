@@ -3,7 +3,7 @@ import { RootStore } from './rootStore';
 
 const mockData: ITransaction[] = [
   {
-    category: 'Food',
+    category: 'food',
     date: Date.now(),
     id: '1',
     isExpense: true,
@@ -11,23 +11,23 @@ const mockData: ITransaction[] = [
     note: 'Breakfast in burger king',
   },
   {
-    category: 'Food',
+    category: 'travel',
     date: Date.now(),
     id: '2',
     isExpense: true,
     money: 100,
-    note: 'Breakfast in burger king',
+    note: '',
   },
   {
-    category: 'Food',
+    category: 'shopping',
     date: Date.now(),
     id: '3',
     isExpense: false,
-    money: 100,
-    note: 'Breakfast in burger king',
+    money: 1200,
+    note: '',
   },
   {
-    category: 'Food',
+    category: 'pets',
     date: Date.now(),
     id: '4',
     isExpense: true,
@@ -35,7 +35,7 @@ const mockData: ITransaction[] = [
     note: 'Breakfast in burger king',
   },
   {
-    category: 'Food',
+    category: 'pets',
     date: Date.now(),
     id: '5',
     isExpense: true,
@@ -43,7 +43,7 @@ const mockData: ITransaction[] = [
     note: 'Breakfast in burger king',
   },
   {
-    category: 'Food',
+    category: 'shopping',
     date: Date.now(),
     id: '6',
     isExpense: true,

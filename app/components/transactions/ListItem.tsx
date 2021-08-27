@@ -1,11 +1,10 @@
 import React from 'react';
 
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 
 import { theme } from '../../../theme/theme';
-
+import { getCategory } from '../../Categories';
 import { Styled } from './styled';
 import { observer } from 'mobx-react-lite';
 import { store } from '../../store/store';
@@ -26,12 +25,19 @@ export const ListItem: React.FC<Props> = observer(
 
     const formatedDate = moment(date).fromNow();
 
+    const category = getCategory(title);
+
     return (
       <Styled.ItemListContainer>
         <Styled.ListItem>
           <Styled.TitleContainer>
             <LinearGradient
-              colors={['yellow', 'orange']}
+              start={[1, 0]}
+              end={[0, 1]}
+              colors={[
+                category?.additionalColor || theme.colors.white,
+                category?.color || theme.colors.yellow,
+              ]}
               style={{
                 width: 60,
                 height: 60,
@@ -40,7 +46,7 @@ export const ListItem: React.FC<Props> = observer(
                 alignItems: 'center',
               }}
             >
-              <Icon name="fast-food" size={30} color={theme.colors.white} />
+              {category?.icon({ size: 30, color: theme.colors.white })}
             </LinearGradient>
             <Styled.ItemTitle>{title}</Styled.ItemTitle>
           </Styled.TitleContainer>
