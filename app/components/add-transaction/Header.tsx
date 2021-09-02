@@ -16,7 +16,7 @@ export const Header: React.FC<Props> = ({ navigation }) => {
         <Icon name="close" size={30} color={theme.colors.lightGray} />
       </TouchableOpacity>
       <Styled.TitleContainer>
-        <Styled.Title>Add Expenses</Styled.Title>
+        <Styled.Title>Add Transaction</Styled.Title>
       </Styled.TitleContainer>
     </Styled.Header>
   );
