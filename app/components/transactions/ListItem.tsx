@@ -12,7 +12,7 @@ import { store } from '../../store/store';
 interface Props {
   title: string;
   money: number;
-  date: number;
+  date: Date | number;
   isExpense: boolean;
 }
 

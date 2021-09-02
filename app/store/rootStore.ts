@@ -1,4 +1,5 @@
 import { types } from 'mobx-state-tree';
+import { ITransaction } from './interfaces';
 import { Transaction } from './Transaction';
 import { User } from './User';
 
@@ -9,7 +10,7 @@ export const RootStore = types
   })
   .views((self) => ({
     get transactionsShortList() {
-      return self.transactions.slice(0, 4);
+      return self.transactions.slice(-4).reverse();
     },
     get allExpenses() {
       return self.transactions.reduce(
@@ -33,5 +34,10 @@ export const RootStore = types
             : total + transaction.money,
         0
       );
+    },
+  }))
+  .actions((self) => ({
+    addTransaction(transaction: ITransaction) {
+      self.transactions.push(transaction);
     },
   }));
