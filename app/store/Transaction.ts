@@ -5,6 +5,6 @@ export const Transaction = types.model('Transaction', {
   category: types.string,
   money: types.number,
   isExpense: types.boolean,
-  date: types.number,
+  date: types.Date,
   note: types.string,
 });

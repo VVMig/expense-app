@@ -1,7 +1,15 @@
 import { observer } from 'mobx-react-lite';
 import React, { useRef, useEffect, useState } from 'react';
-import { Animated, Dimensions, StyleSheet, Keyboard } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import 'react-native-get-random-values';
+import { v4 } from 'uuid';
 
 import { AddExpenseNavigationProp } from '../../../screens/interfaces';
 import { theme } from '../../../theme/theme';
@@ -15,6 +23,8 @@ import { Option } from './Option';
 
 import { Styled } from './styled';
 import { DefaultCategories } from '../../Categories';
+import { getSnapshot } from 'mobx-state-tree';
+import moment from 'moment';
 
 const { height } = Dimensions.get('window');
 
@@ -41,6 +51,7 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [amount, setAmount] = useState('');
+  const [isExpense, setIsExpense] = useState(true);
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState('');
   const [category, setCategory] = useState(DefaultCategories[0].name);
@@ -54,6 +65,14 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
   }, []);
 
   const onPressAdd = () => {
+    store.addTransaction({
+      id: v4(),
+      category,
+      date,
+      isExpense,
+      note,
+      money: +amount,
+    });
     navigation.goBack();
   };
 
@@ -70,51 +89,57 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
   };
 
   return (
-    <Animated.View
-      style={{
-        top: appearAnim,
-        ...Styles.container,
-      }}
-      onTouchStart={() => {
-        Keyboard.dismiss();
-      }}
-    >
-      <Header navigation={navigation} />
-      <Styled.AmountContainer>
-        <Styled.AmountInput
-          keyboardType="numeric"
-          value={amount}
-          onChangeText={onChangeAmount}
-          placeholder="0"
-          placeholderTextColor={theme.colors.purple}
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <Animated.View
+        style={{
+          top: appearAnim,
+          ...Styles.container,
+        }}
+      >
+        <Header navigation={navigation} />
+        <Styled.AmountContainer>
+          <Styled.AmountInput
+            keyboardType="numeric"
+            value={amount}
+            onChangeText={onChangeAmount}
+            placeholder="0"
+            placeholderTextColor={theme.colors.purple}
+          />
+          <Styled.CurrencyContainer
+            isExpense={isExpense}
+            onPress={() => setIsExpense(!isExpense)}
+          >
+            <Icon
+              name={currencyIconName}
+              size={40}
+              color={theme.colors.white}
+            />
+          </Styled.CurrencyContainer>
+        </Styled.AmountContainer>
+        <Styled.OptionsContainer>
+          <Option
+            iconName="th-large"
+            title={category}
+            onPress={onToggleModalVisible}
+          />
+          <Option
+            iconName="sticky-note"
+            title="Note"
+            isInput
+            onChange={(text: string) => setNote(text)}
+            value={note}
+          />
+          <DateOption date={date} setDate={setDate} />
+        </Styled.OptionsContainer>
+        <AddButton onPress={onPressAdd} />
+        <CategoryModal
+          isModalVisible={isModalVisible}
+          onToggleModalVisible={onToggleModalVisible}
+          defaultCategory={category}
+          onSave={(categoryName: string) => setCategory(categoryName)}
         />
-        <Styled.CurrencyContainer>
-          <Icon name={currencyIconName} size={40} color={theme.colors.white} />
-        </Styled.CurrencyContainer>
-      </Styled.AmountContainer>
-      <Styled.OptionsContainer>
-        <Option
-          iconName="th-large"
-          title={category}
-          onPress={onToggleModalVisible}
-        />
-        <Option
-          iconName="sticky-note"
-          title="Note"
-          isInput
-          onChange={(text: string) => setNote(text)}
-          value={note}
-        />
-        <DateOption date={date} setDate={setDate} />
-      </Styled.OptionsContainer>
-      <AddButton onPress={onPressAdd} />
-      <CategoryModal
-        isModalVisible={isModalVisible}
-        onToggleModalVisible={onToggleModalVisible}
-        defaultCategory={category}
-        onSave={(categoryName: string) => setCategory(categoryName)}
-      />
-    </Animated.View>
+      </Animated.View>
+    </TouchableWithoutFeedback>
   );
 });
 

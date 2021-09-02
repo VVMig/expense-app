@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { StyledCurrency } from './interfaces';
 
 const Header = styled.View`
   align-items: flex-end;
@@ -35,7 +36,7 @@ const AmountInput = styled.TextInput`
   color: ${({ theme }) => theme.colors.purple};
 `;
 
-const CurrencyContainer = styled.View`
+const CurrencyContainer = styled.TouchableOpacity<StyledCurrency>`
   height: 80px;
   position: absolute;
   bottom: 0;
@@ -46,7 +47,8 @@ const CurrencyContainer = styled.View`
   justify-content: center;
   border-bottom-left-radius: 45px;
   border-top-left-radius: 45px;
-  background-color: ${({ theme }) => theme.colors.lightGray};
+  background-color: ${({ theme, isExpense }) =>
+    isExpense ? theme.colors.lightRed : theme.colors.green};
 `;
 
 const OptionsContainer = styled.View`
