@@ -10,6 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import 'react-native-get-random-values';
 import { v4 } from 'uuid';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AddExpenseNavigationProp } from '../../../screens/interfaces';
 import { theme } from '../../../theme/theme';
@@ -23,8 +24,7 @@ import { Option } from './Option';
 
 import { Styled } from './styled';
 import { DefaultCategories } from '../../Categories';
-import { getSnapshot } from 'mobx-state-tree';
-import moment from 'moment';
+import { StorageKeys } from '../../StorageKeys';
 
 const { height } = Dimensions.get('window');
 
@@ -73,6 +73,16 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
       note,
       money: +amount,
     });
+
+    try {
+      AsyncStorage.setItem(
+        StorageKeys.Transactions,
+        JSON.stringify(store.transactions)
+      );
+    } catch (error) {
+      store.setErrorMessage(error);
+    }
+
     navigation.goBack();
   };
 
