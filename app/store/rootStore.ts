@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { cast, types } from 'mobx-state-tree';
 import { ITransaction } from './interfaces';
 import { Transaction } from './Transaction';
 import { User } from './User';
@@ -7,6 +7,7 @@ export const RootStore = types
   .model({
     user: types.maybe(User),
     transactions: types.optional(types.array(Transaction), []),
+    errorMessage: types.maybe(types.string),
   })
   .views((self) => ({
     get transactionsShortList() {
@@ -39,5 +40,11 @@ export const RootStore = types
   .actions((self) => ({
     addTransaction(transaction: ITransaction) {
       self.transactions.push(transaction);
+    },
+    setTransactions(transactions: ITransaction[]) {
+      self.transactions = cast(transactions);
+    },
+    setErrorMessage(message: string) {
+      self.errorMessage = message;
     },
   }));
