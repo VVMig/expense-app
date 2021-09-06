@@ -30,10 +30,6 @@ const { height } = Dimensions.get('window');
 
 const animationDurationMs = 250;
 
-interface Props {
-  navigation: AddExpenseNavigationProp;
-}
-
 const currencyNameSwitch = (userCurrency?: Currency) => {
   switch (userCurrency) {
     case Currency.EUR:
@@ -45,7 +41,11 @@ const currencyNameSwitch = (userCurrency?: Currency) => {
   return 'dollar';
 };
 
-export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
+interface Props {
+  onModalClose: () => void;
+}
+
+export const AddTransaction: React.FC<Props> = observer(({ onModalClose }) => {
   const appearAnim = useRef(new Animated.Value(height)).current;
   const currencyIconName = currencyNameSwitch(store.user?.currency);
 
@@ -83,7 +83,7 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
       store.setErrorMessage(error);
     }
 
-    navigation.goBack();
+    onModalClose();
   };
 
   const onToggleModalVisible = () => {
@@ -106,7 +106,7 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
           ...Styles.container,
         }}
       >
-        <Header navigation={navigation} />
+        <Header onModalClose={onModalClose} />
         <Styled.AmountContainer>
           <Styled.AmountInput
             keyboardType="numeric"
