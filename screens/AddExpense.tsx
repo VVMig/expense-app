@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal } from 'react-native';
 
 import { AddTransaction } from '../app/components/add-transaction/AddTransaction';
-import { AddExpenseNavigationProp } from './interfaces';
 import { Styled } from './styled';
 
 interface Props {

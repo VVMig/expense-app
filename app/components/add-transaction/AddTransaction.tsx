@@ -1,8 +1,7 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Animated,
-  Dimensions,
   StyleSheet,
   Keyboard,
   TouchableWithoutFeedback,
@@ -12,7 +11,6 @@ import 'react-native-get-random-values';
 import { v4 } from 'uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { AddExpenseNavigationProp } from '../../../screens/interfaces';
 import { theme } from '../../../theme/theme';
 import { Currency } from '../../Currency';
 import { store } from '../../store/store';
@@ -25,10 +23,6 @@ import { Option } from './Option';
 import { Styled } from './styled';
 import { DefaultCategories } from '../../Categories';
 import { StorageKeys } from '../../StorageKeys';
-
-const { height } = Dimensions.get('window');
-
-const animationDurationMs = 250;
 
 const currencyNameSwitch = (userCurrency?: Currency) => {
   switch (userCurrency) {
@@ -46,7 +40,6 @@ interface Props {
 }
 
 export const AddTransaction: React.FC<Props> = observer(({ onModalClose }) => {
-  const appearAnim = useRef(new Animated.Value(height)).current;
   const currencyIconName = currencyNameSwitch(store.user?.currency);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -55,14 +48,6 @@ export const AddTransaction: React.FC<Props> = observer(({ onModalClose }) => {
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState('');
   const [category, setCategory] = useState(DefaultCategories[0].name);
-
-  useEffect(() => {
-    Animated.timing(appearAnim, {
-      toValue: 0,
-      duration: animationDurationMs,
-      useNativeDriver: false,
-    }).start();
-  }, []);
 
   const onPressAdd = () => {
     store.addTransaction({
@@ -102,7 +87,6 @@ export const AddTransaction: React.FC<Props> = observer(({ onModalClose }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Animated.View
         style={{
-          top: appearAnim,
           ...Styles.container,
         }}
       >
