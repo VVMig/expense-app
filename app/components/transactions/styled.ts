@@ -29,7 +29,7 @@ const ItemListContainer = styled.View`
   padding-bottom: 10px;
 `;
 
-const ListItem = styled.TouchableOpacity`
+const ListItem = styled.View`
   width: 100%;
   padding: 20px 20px;
   background-color: ${({ theme }) => theme.colors.white};
