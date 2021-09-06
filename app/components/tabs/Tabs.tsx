@@ -36,9 +36,7 @@ export const Tabs = () => {
           tabBarIcon: () => (
             <Icon name="plus" size={40} color={theme.colors.white} />
           ),
-          tabBarButton: ({ children, onPress }) => (
-            <TabAdd onPress={onPress}>{children}</TabAdd>
-          ),
+          tabBarButton: ({ children }) => <TabAdd>{children}</TabAdd>,
           unmountOnBlur: true,
           tabBarStyle: {
             display: 'none',

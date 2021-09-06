@@ -1,20 +1,12 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
-import { GestureResponderEvent } from 'react-native';
+import React, { useState } from 'react';
+import { AddExpense } from '../../../screens';
 import { theme } from '../../../theme/theme';
 import { Styled } from './styled';
 
-interface Props {
-  onPress:
-    | ((
-        e:
-          | React.MouseEvent<HTMLAnchorElement, MouseEvent>
-          | GestureResponderEvent
-      ) => void)
-    | undefined;
-}
+export const TabAdd: React.FC = ({ children }) => {
+  const [isShowModal, setIsShowModal] = useState(false);
 
-export const TabAdd: React.FC<Props> = ({ children, onPress }) => {
   return (
     <Styled.AddButtonContainer>
       <LinearGradient
@@ -28,8 +20,14 @@ export const TabAdd: React.FC<Props> = ({ children, onPress }) => {
           bottom: 30,
         }}
       >
-        <Styled.AddButton onPress={onPress}>{children}</Styled.AddButton>
+        <Styled.AddButton onPress={() => setIsShowModal(true)}>
+          {children}
+        </Styled.AddButton>
       </LinearGradient>
+      <AddExpense
+        onModalClose={() => setIsShowModal(false)}
+        isShowModal={isShowModal}
+      />
     </Styled.AddButtonContainer>
   );
 };

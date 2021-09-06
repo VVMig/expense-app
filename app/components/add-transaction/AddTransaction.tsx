@@ -1,8 +1,7 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Animated,
-  Dimensions,
   StyleSheet,
   Keyboard,
   TouchableWithoutFeedback,
@@ -12,7 +11,6 @@ import 'react-native-get-random-values';
 import { v4 } from 'uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { AddExpenseNavigationProp } from '../../../screens/interfaces';
 import { theme } from '../../../theme/theme';
 import { Currency } from '../../Currency';
 import { store } from '../../store/store';
@@ -26,14 +24,6 @@ import { Styled } from './styled';
 import { DefaultCategories } from '../../Categories';
 import { StorageKeys } from '../../StorageKeys';
 
-const { height } = Dimensions.get('window');
-
-const animationDurationMs = 250;
-
-interface Props {
-  navigation: AddExpenseNavigationProp;
-}
-
 const currencyNameSwitch = (userCurrency?: Currency) => {
   switch (userCurrency) {
     case Currency.EUR:
@@ -45,8 +35,11 @@ const currencyNameSwitch = (userCurrency?: Currency) => {
   return 'dollar';
 };
 
-export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
-  const appearAnim = useRef(new Animated.Value(height)).current;
+interface Props {
+  onModalClose: () => void;
+}
+
+export const AddTransaction: React.FC<Props> = observer(({ onModalClose }) => {
   const currencyIconName = currencyNameSwitch(store.user?.currency);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -55,14 +48,6 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState('');
   const [category, setCategory] = useState(DefaultCategories[0].name);
-
-  useEffect(() => {
-    Animated.timing(appearAnim, {
-      toValue: 0,
-      duration: animationDurationMs,
-      useNativeDriver: false,
-    }).start();
-  }, []);
 
   const onPressAdd = () => {
     store.addTransaction({
@@ -83,7 +68,7 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
       store.setErrorMessage(error);
     }
 
-    navigation.goBack();
+    onModalClose();
   };
 
   const onToggleModalVisible = () => {
@@ -102,11 +87,10 @@ export const AddTransaction: React.FC<Props> = observer(({ navigation }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Animated.View
         style={{
-          top: appearAnim,
           ...Styles.container,
         }}
       >
-        <Header navigation={navigation} />
+        <Header onModalClose={onModalClose} />
         <Styled.AmountContainer>
           <Styled.AmountInput
             keyboardType="numeric"
